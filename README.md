@@ -7,4 +7,4 @@ More informations can be found at https://circecharacterworks.wordpress.com/2018
 # Intall
 copy module folder into your local maya/VERSION/ folder
 
-fllow procedures in MayanomiconInstall.txt
+follow procedures in MayanomiconInstall.txt
