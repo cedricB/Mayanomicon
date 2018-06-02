@@ -1,0 +1,4 @@
+{CHANGE the first line}
++ Mayanomicon 1.0 C:\Users\cedric\Documents\maya\2015-x64\modules\Mayanomicon
+
+{to the fullpath name of the \Mayanomicon directory}
