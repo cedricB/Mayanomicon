@@ -31,7 +31,7 @@ import maya.OpenMayaMPx as OpenMayaMPx
 import maya.OpenMayaAnim as OpenMayaAnim
 
 import pluginCore
-
+import maya.cmds
 
 class glueDeformer(OpenMayaMPx.MPxDeformerNode):
     API_VERSION = "Any"
@@ -171,6 +171,14 @@ class glueDeformer(OpenMayaMPx.MPxDeformerNode):
         glueDeformer.addAttribute(glueDeformer.indexMapping)
 
     @staticmethod
+    def _getOutputAttribute():
+        apiVersion = maya.cmds.about(apiVersion=True)
+        if apiVersion < 201600:
+            return OpenMayaMPx.cvar.MPxDeformerNode_outputGeom
+
+        return OpenMayaMPx.cvar.MPxGeometryFilter_outputGeom
+
+    @staticmethod
     def _addAttributes():
         numericAttributeUtils = OpenMaya.MFnNumericAttribute()
 
@@ -178,7 +186,7 @@ class glueDeformer(OpenMayaMPx.MPxDeformerNode):
 
         glueDeformer._addMappinAttribute()
 
-        outputGeometry = OpenMayaMPx.cvar.MPxDeformerNode_outputGeom
+        outputGeometry = glueDeformer._getOutputAttribute()
 
         glueDeformer.attributeAffects(glueDeformer.bindMesh, 
                                       outputGeometry)
