@@ -9,6 +9,8 @@ class PropertySettings(object):
 
     ATTRIBUTE_NON_KEYABLE_STATUS = False
 
+    ATTRIBUTE_KEYABLE_STATUS = True
+
     ATTRIBUTE_HIDDEN_STATUS = True
 
     ATTRIBUTE_NOT_HIDDEN_STATUS = False

@@ -10,12 +10,15 @@ import PySide.QtCore as QtCore
 class NodePicker(QtGui.QWidget):
     def __init__(self,
                  labelName,
-                 icon='picker.png'):
+                 icon='picker.png',
+                 filter=None):
         super(NodePicker, self).__init__()
 
         self.labelName = labelName
 
         self.icon = icon
+        
+        self.filter = filter
 
         self.initUI()
 
@@ -67,4 +70,41 @@ class NodePicker(QtGui.QWidget):
         if not currentSelection:
             return
 
+        if self.filter is None:
+            self.stringWidget.setText(currentSelection[0])
+
+            return
+
+        if self.filter in maya.cmds.nodeType(currentSelection[0],
+                                             derived=True):
+            return
+
         self.stringWidget.setText(currentSelection[0])
+
+
+class AttributePicker(NodePicker):
+    def __init__(self,
+                 labelName,
+                 icon='picker.png',
+                 filter=None):
+        super(AttributePicker, self).__init__(labelName,
+                                              icon=icon)
+
+    def _pickSelection(self):
+        self.stringWidget.setText('')
+
+        currentSelection = maya.cmds.ls(sl=True, o=True) or []
+
+        if not currentSelection:
+            return
+        
+        selectedAttributes = maya.cmds.channelBox('mainChannelBox',
+                                                  q=True,
+                                                  selectedMainAttributes=True,
+                                                  fullPathName=True)
+
+        if not selectedAttributes:
+            return
+
+        self.stringWidget.setText('{}.{}'.format(currentSelection[0],
+                                                 selectedAttributes[0]))

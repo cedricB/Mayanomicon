@@ -33,6 +33,7 @@ import maya.OpenMayaAnim as OpenMayaAnim
 import pluginCore
 import maya.cmds
 
+
 class glueDeformer(OpenMayaMPx.MPxDeformerNode):
     API_VERSION = "Any"
     PLUGIN_NODE_NAME = "glueDeformer"
